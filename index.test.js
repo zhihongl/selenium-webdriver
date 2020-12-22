@@ -36,10 +36,11 @@ test(
         // .setLoggingPrefs(prefs)
         .forBrowser("firefox")
         .build();
-
+      console.log("1. Browser built.");
       // await driver.manage().window().maximize();
-
+      await new Promise((resolve) => setTimeout(resolve, 500));
       await driver.get(rootURL);
+      console.log("2. Main page opened.");
       const anchor = await querySelector(
         `[href*='${projectURLPartial}']`,
         driver
@@ -52,15 +53,18 @@ test(
           driver
         );
       }
-
+      console.log("3. Anchor selected.");
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const actual = await anchor.getText();
       await anchor.click();
+      console.log("4. Anchor clicked.");
       const expected = await driver.current_url;
       // expect(expected).stringContaining(projectURLPartial);
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
       await driver.quit();
+      console.log("5. Browser closed.\n");
+      await new Promise((resolve) => setTimeout(resolve, 1000 * 60));
     }
   },
   10000000000000000n
